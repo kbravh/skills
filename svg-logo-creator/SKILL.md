@@ -1,6 +1,6 @@
 ---
 name: svg-logo-creator
-description: Create professional SVG logos from concept briefs or descriptions. Use when generating SVG logo files, creating logo variations (horizontal, vertical, icon-only), or implementing logo designs. Triggers on "create SVG logo," "generate logo," "make a logo," "logo SVG," "design a logo," or when given a logo concept brief from logo-ideation. For logo brainstorming and concept development, use logo-ideation first.
+description: Create professional SVG logos from concept briefs or descriptions. Use when generating SVG logo files, creating logo variations (horizontal, vertical, icon-only), or implementing logo designs. Triggers on "create SVG logo," "generate logo," "make a logo," "logo SVG," "design a logo," or when given a logo concept brief from logo-ideation.
 ---
 
 # SVG Logo Creator
