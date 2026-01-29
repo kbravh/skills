@@ -1,6 +1,6 @@
 ---
 name: logo-ideation
-description: Brand discovery and logo concept development. Use when brainstorming logo ideas, exploring visual directions, analyzing competitor logos, or developing logo concepts before creation. Triggers on "logo ideas," "logo concept," "brand identity," "logo brainstorm," "competitor logos," "visual identity exploration," or any pre-design logo planning. For actual SVG logo creation, use svg-logo-creator after ideation.
+description: Brand discovery and logo concept development. Use when brainstorming logo ideas, exploring visual directions, analyzing competitor logos, or developing logo concepts before creation. Triggers on "logo ideas," "logo concept," "brand identity," "logo brainstorm," "competitor logos," "visual identity exploration," or any pre-design logo planning.
 ---
 
 # Logo Ideation
