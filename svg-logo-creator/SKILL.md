@@ -61,7 +61,7 @@ Create these standard variations:
 | Icon-only | Favicons, app icons, small spaces | Symbol without text |
 | Wordmark-only | When icon context is established | Text without symbol |
 | Monochrome | Single-color contexts | Black or white version |
-| Reversed | Dark backgrounds | Light colors for dark bg |
+| Inverted | Dark backgrounds | Light colors for dark bg |
 
 ### 4. Save Files
 
@@ -74,7 +74,7 @@ logo-icon.svg
 logo-wordmark.svg
 logo-mono-black.svg
 logo-mono-white.svg
-logo-reversed.svg
+logo-inverted.svg
 ```
 
 ## SVG Best Practices
