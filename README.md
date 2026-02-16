@@ -27,6 +27,12 @@ This will prompt you to select which skills to install.
 | [logo-ideation](./logo-ideation/) | Brand discovery and logo concept development. Use when brainstorming logo ideas, exploring visual directions, analyzing competitor logos, or developing logo concepts before creation. |
 | [svg-logo-creator](./svg-logo-creator/) | Create professional SVG logos from concept briefs or descriptions. Use when generating SVG logo files, creating logo variations, or implementing logo designs. |
 
+### Data Fetching
+
+| Skill | Description |
+|-------|-------------|
+| [tanstack-query](./tanstack-query/) | TanStack Query (React Query) v5 best practices for data fetching, caching, and mutations. Use when fetching server data with useQuery, setting up mutations, configuring caching strategies, managing query keys, handling optimistic updates, or invalidating queries. |
+
 ## Creating Skills
 
 These skills are created following the best practices outlined in the [Agent Skills documentation](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview).
