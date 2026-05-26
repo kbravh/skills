@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "kbravh-skills",
+  "description": "A collection of AI skills and plugins for Claude Code and other Claude agents.",
+  "owner": {
+    "name": "Karey Higuera",
+    "email": "karey.higuera@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "game-design-brainstorming",
+      "source": "./game-design-brainstorming",
+      "description": "A creative collaborator for video game design — turn loose ideas, themes, and mechanics into specific gameplay loops, design pillars, and pitch documents. Direct, opinionated, reference-heavy.",
+      "version": "0.1.0",
+      "category": "creative",
+      "tags": ["game-design", "brainstorming", "gamedev", "ideation"],
+      "author": {
+        "name": "Karey Higuera",
+        "email": "karey.higuera@gmail.com",
+        "url": "https://github.com/kbravh"
+      },
+      "license": "MIT"
+    }
+  ]
+}

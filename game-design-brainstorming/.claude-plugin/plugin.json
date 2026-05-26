@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "game-design-brainstorming",
+  "displayName": "Game Design Brainstorming",
+  "version": "0.1.0",
+  "description": "A creative collaborator for video game design — turn loose ideas, themes, and mechanics into specific gameplay loops, design pillars, and pitch documents. Direct, opinionated, reference-heavy.",
+  "keywords": [
+    "game-design",
+    "brainstorming",
+    "creative",
+    "gamedev",
+    "ideation"
+  ],
+  "author": {
+    "name": "Karey Higuera",
+    "email": "karey.higuera@gmail.com",
+    "url": "https://github.com/kbravh"
+  },
+  "license": "MIT"
+}
