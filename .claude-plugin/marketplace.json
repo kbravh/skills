@@ -8,6 +8,20 @@
   },
   "plugins": [
     {
+      "name": "proton-pass-secrets",
+      "source": "./proton-pass-secrets",
+      "description": "Read secrets from Proton Pass with pass-cli secret references (pass://vault/item/field) — inject API tokens and passwords into commands, env files, and config templates without exposing plaintext.",
+      "version": "0.1.0",
+      "category": "developer-tools",
+      "tags": ["proton-pass", "secrets", "credentials", "pass-cli", "security"],
+      "author": {
+        "name": "Karey Higuera",
+        "email": "karey.higuera@gmail.com",
+        "url": "https://github.com/kbravh"
+      },
+      "license": "MIT"
+    },
+    {
       "name": "game-design-brainstorming",
       "source": "./game-design-brainstorming",
       "description": "A creative collaborator for video game design — turn loose ideas, themes, and mechanics into specific gameplay loops, design pillars, and pitch documents. Direct, opinionated, reference-heavy.",

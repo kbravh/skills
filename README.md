@@ -27,6 +27,12 @@ This will prompt you to select which skills to install.
 | [logo-ideation](./logo-ideation/) | Brand discovery and logo concept development. Use when brainstorming logo ideas, exploring visual directions, analyzing competitor logos, or developing logo concepts before creation. |
 | [svg-logo-creator](./svg-logo-creator/) | Create professional SVG logos from concept briefs or descriptions. Use when generating SVG logo files, creating logo variations, or implementing logo designs. |
 
+### Developer Tools
+
+| Skill | Description |
+|-------|-------------|
+| [proton-pass-secrets](./proton-pass-secrets/) | Read secrets from Proton Pass with pass-cli secret references (`pass://vault/item/field`). Use when running commands that need API tokens or passwords from a Proton Pass vault, injecting secrets into env vars or config templates, or resolving a `pass://` reference without exposing plaintext. |
+
 ### Data Fetching
 
 | Skill | Description |

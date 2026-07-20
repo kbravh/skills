@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "proton-pass-secrets",
+  "displayName": "Proton Pass Secrets",
+  "version": "0.1.0",
+  "description": "Read secrets from Proton Pass with pass-cli secret references (pass://vault/item/field) — inject API tokens and passwords into commands, env files, and config templates without exposing plaintext.",
+  "keywords": [
+    "proton-pass",
+    "secrets",
+    "credentials",
+    "pass-cli",
+    "security"
+  ],
+  "author": {
+    "name": "Karey Higuera",
+    "email": "karey.higuera@gmail.com",
+    "url": "https://github.com/kbravh"
+  },
+  "license": "MIT"
+}
