@@ -27,6 +27,12 @@ This will prompt you to select which skills to install.
 | [logo-ideation](./logo-ideation/) | Brand discovery and logo concept development. Use when brainstorming logo ideas, exploring visual directions, analyzing competitor logos, or developing logo concepts before creation. |
 | [svg-logo-creator](./svg-logo-creator/) | Create professional SVG logos from concept briefs or descriptions. Use when generating SVG logo files, creating logo variations, or implementing logo designs. |
 
+### Documentation
+
+| Skill | Description |
+|-------|-------------|
+| [html-specs](./html-specs/) | Create engaging, self-contained HTML slide decks for specs, implementation plans, ADRs, and brainstorm docs. Single-file, keyboard-navigable, dark slate + emerald design system with ready-made components (callouts, option grids, timelines, terminal blocks, diagrams). |
+
 ### Developer Tools
 
 | Skill | Description |

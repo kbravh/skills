@@ -1,0 +1,48 @@
+{
+  "skill_name": "html-specs",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write me a spec for adding TOTP-based two-factor auth to my side project Podling (Next.js 15, Prisma, postgres). Cover enrollment flow, login flow changes, recovery codes, and the DB schema changes. I want to be able to share this with a friend who's reviewing the approach.",
+      "expected_output": "Single self-contained HTML file: spec with header/meta/status, schema code blocks, flow diagrams or timelines, acceptance criteria checklist. Opens from file:// with no network.",
+      "files": [],
+      "assertions": [
+        "deliverable-is-html: the deliverable is an .html file (not .md)",
+        "self-contained: no external resource requests — no http(s) URLs in <script src>, <link href>, <img src>, no @import, no CDN references anywhere in the file",
+        "shareable-single-file: exactly one deliverable file; opening it from file:// renders styled content (has inline <style> with a body background and font rules)",
+        "visual-structure-beyond-prose: contains at least 3 distinct non-prose components (e.g. styled table, code block, diagram/flow, callout, checklist, timeline) rather than only headings + paragraphs",
+        "covers-all-four-topics: enrollment flow, login flow changes, recovery codes, and DB schema changes each appear as an identifiable section",
+        "schema-as-code: DB schema changes shown in a code block (Prisma model or SQL), not described only in prose",
+        "acceptance-or-criteria-present: contains explicit acceptance criteria or a review checklist"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "I need a decision record. Context: my NAS backup script currently rsyncs to a USB drive nightly. I'm deciding between switching to restic with B2 as the backend, borgbackup to rsync.net, or keeping rsync but adding a second drive. I'm leaning restic+B2 for the encryption and cloud offsite. Write it up as an ADR I can drop in my homelab repo.",
+      "expected_output": "Single self-contained HTML ADR: decision record component with status, option comparison grid with recommended flagged, drivers/tradeoffs stated.",
+      "files": [],
+      "assertions": [
+        "deliverable-is-html: the deliverable is an .html file (not .md)",
+        "self-contained: no external resource requests — no http(s) URLs in <script src>, <link href>, <img src>, no @import, no CDN references anywhere in the file",
+        "adr-anatomy: has status, date, context, decision, and consequences/tradeoffs — the recognizable ADR shape",
+        "three-options-compared: all three options presented with tradeoffs, visually distinguishable (cards/grid/table), not one prose blob",
+        "recommendation-flagged: the chosen option is visually marked as selected/recommended, distinct from the others",
+        "consequences-stated: at least one accepted downside/tradeoff of the chosen option is explicitly stated"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "brainstorm doc time — i'm trying to figure out the onboarding flow for my glass-notes capture app. rough ideas: (a) blank canvas with a single hotkey hint, (b) 3-step guided tour, (c) pre-seeded example notes the user deletes. capture the tradeoffs, what we know about ADHD users bouncing off tutorials, and end with open questions. throwaway doc, just make it easy to think with.",
+      "expected_output": "Single self-contained HTML brainstorm doc: option grid comparing three approaches, callouts for key insights, open-questions section. Engaging and scannable, not a bullet wall.",
+      "files": [],
+      "assertions": [
+        "deliverable-is-html: the deliverable is an .html file (not .md)",
+        "self-contained: no external resource requests — no http(s) URLs in <script src>, <link href>, <img src>, no @import, no CDN references anywhere in the file",
+        "three-options-side-by-side: options a/b/c presented in a comparable visual structure (grid/cards/table) with tradeoffs per option",
+        "adhd-insight-highlighted: the ADHD-users-bounce-off-tutorials insight is visually elevated (callout/highlight), not buried in a paragraph",
+        "ends-with-open-questions: document ends with an explicit open-questions section",
+        "scannable-not-bullet-wall: no run of more than ~8 consecutive plain bullet items; structure varies between components"
+      ]
+    }
+  ]
+}

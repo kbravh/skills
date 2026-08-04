@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPEC TITLE — Spec</title>
+<style>
+/* ============================================================
+   Design tokens — dark slate + emerald pixel trim
+   ============================================================ */
+:root {
+  --bg: #0f172b;
+  --surface: #1d293d;
+  --surface-2: #253449;
+  --border: #314158;
+  --text: #cad5e2;
+  --text-strong: #e2e8f0;
+  --muted: #90a1b9;
+  --accent: #00bc7d;
+  --accent-hover: #00d492;
+  --accent-dim: #10b981;
+
+  --pass: #34d399;
+  --warn: #fbbf24;
+  --fail: #f87171;
+  --info: #60a5fa;
+
+  /* code: Night Owl */
+  --code-bg: #011627;
+  --code-fg: #d6deeb;
+  --code-border: #01213a;
+  --code-comment: #637777;
+  --code-keyword: #c792ea;
+  --code-string: #ecc48d;
+  --code-fn: #82aaff;
+  --code-num: #f78c6c;
+
+  --font-body: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-display: "Avenir Next", "Segoe UI", system-ui, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --radius: .375rem;
+  --radius-lg: .5rem;
+}
+
+/* ============================================================
+   Deck chassis — fluid: everything scales off body font-size
+   ============================================================ */
+* { box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: clamp(18px, 1.6vw, 28px);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.slide {
+  position: absolute;
+  inset: 0 0 2.6rem 0; /* leave room for strap */
+  display: none;
+  flex-direction: column;
+  padding: 4vh 7vw;
+  overflow-y: auto;
+}
+.slide.active { display: flex; }
+/* flexible spacers: center short slides, top-align tall (scrollable) ones —
+   a plain justify-content:center makes overflowing content unreachable at the top */
+.slide::before, .slide::after { content: ""; flex: 1 1 0; min-height: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .slide.active { animation: slidein .25s ease-out; }
+  @keyframes slidein { from { opacity: 0; transform: translateY(.4rem); } }
+}
+
+/* ============================================================
+   Typography — em cascade off the fluid body size
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.015em;
+  color: var(--text-strong);
+  margin: 0 0 .5em;
+}
+h1 { font-size: 2.6em; line-height: 1.05; max-width: 18ch; }
+h2 { font-size: 1.7em; line-height: 1.15; max-width: 26ch; }
+h3 { font-size: 1.05em; line-height: 1.25; }
+h4 { font-size: .85em; margin-bottom: .35em; }
+p, li { font-size: .82em; max-width: 62ch; }
+p { margin: 0 0 .8em; }
+.lede { font-size: 1em; color: var(--muted); max-width: 46ch; }
+strong { color: var(--text-strong); }
+small, .dim { color: var(--muted); }
+ul, ol { margin: 0 0 .8em; padding-inline-start: 1.4em; }
+li { margin-block: .3em; }
+li::marker { color: var(--accent); }
+
+/* pixel-underline links: stripe visible at rest, brightens on hover */
+a {
+  color: var(--text-strong);
+  text-decoration: none;
+  padding-bottom: 2px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='4' shape-rendering='crispEdges'%3E%3Crect x='0' y='2' width='2' height='2' fill='%2310b981'/%3E%3Crect x='2' y='0' width='2' height='2' fill='%2334d399'/%3E%3Crect x='4' y='2' width='2' height='2' fill='%2310b981'/%3E%3Crect x='6' y='0' width='2' height='2' fill='%2334d399'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 8px 4px;
+  background-position: 0 100%;
+  transition: color .15s ease-out;
+}
+a:hover, a:focus-visible { color: var(--accent-hover); }
+
+/* zigzag pixel divider — emerald, actually visible */
+hr, .pixel-divider {
+  border: none;
+  height: 8px;
+  width: 100%;
+  margin: 1em 0;
+  background-color: color-mix(in oklab, var(--accent-dim) 65%, var(--border));
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='8'%3E%3Cpath d='M0 6h3v2H0zM3 3h3v3H3zM6 0h4v3H6zM10 3h3v3h-3zM13 6h3v2h-3z' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: repeat-x;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='8'%3E%3Cpath d='M0 6h3v2H0zM3 3h3v3H3zM6 0h4v3H6zM10 3h3v3h-3zM13 6h3v2h-3z' fill='%23000'/%3E%3C/svg%3E");
+  mask-repeat: repeat-x;
+}
+
+/* pixel corner brackets — title slides, hero panels */
+.pixel-frame {
+  border: 8px solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h8v4H4v4H0zM16 0h8v8h-4V4h-4zM0 16h4v4h4v4H0zM20 16h4v8h-8v-4h4z' fill='%2334d399'/%3E%3C/svg%3E") 8;
+  padding: 1.2em 1.5em;
+}
+
+/* eyebrow kicker */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: .55em;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  color: var(--accent);
+  margin-bottom: 1.2em;
+}
+.eyebrow .sep { color: var(--muted); margin-inline: .6em; }
+
+/* ============================================================
+   Slide variants
+   ============================================================ */
+/* title slide */
+.slide.title { align-items: flex-start; }
+.slide.title .doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5em 1.6em;
+  margin-top: 1.4em;
+  font-family: var(--font-mono);
+  font-size: .6em;
+  color: var(--muted);
+}
+.slide.title .doc-meta b { color: var(--text); font-weight: 500; }
+
+/* divider slide — structural rhythm between parts */
+.slide.divider {
+  background:
+    radial-gradient(120% 90% at 15% 85%, color-mix(in oklab, var(--accent) 9%, transparent), transparent 60%),
+    var(--bg);
+}
+.slide.divider .part {
+  font-family: var(--font-mono);
+  font-size: .6em;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1em;
+}
+.slide.divider h2 { font-size: 2.2em; }
+
+/* ============================================================
+   Layout helpers
+   ============================================================ */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2em; align-items: start; }
+.cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; align-items: start; }
+.split { display: grid; grid-template-columns: minmax(14em, 2fr) 3fr; gap: 1.5em; align-items: start; }
+@media (max-width: 760px) {
+  .cols, .cols-3, .split { grid-template-columns: 1fr; }
+}
+.cols p, .cols li, .cols-3 p, .cols-3 li, .split p, .split li { max-width: none; }
+
+/* ============================================================
+   Components (all sized in em — they scale with the deck)
+   ============================================================ */
+
+/* tags / status pills */
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: .5em;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: .25em .9em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  background: color-mix(in oklab, var(--surface) 60%, transparent);
+  vertical-align: middle;
+}
+h2 .tag, h3 .tag, h4 .tag { font-size: .55em; }
+.tag.pass { color: var(--pass); border-color: color-mix(in oklab, var(--pass) 45%, transparent); background: color-mix(in oklab, var(--pass) 12%, transparent); }
+.tag.warn { color: var(--warn); border-color: color-mix(in oklab, var(--warn) 45%, transparent); background: color-mix(in oklab, var(--warn) 12%, transparent); }
+.tag.fail { color: var(--fail); border-color: color-mix(in oklab, var(--fail) 45%, transparent); background: color-mix(in oklab, var(--fail) 12%, transparent); }
+.tag.info { color: var(--info); border-color: color-mix(in oklab, var(--info) 45%, transparent); background: color-mix(in oklab, var(--info) 12%, transparent); }
+
+/* callouts */
+.callout {
+  --co: var(--info);
+  padding: .7em .9em;
+  margin-block: .8em;
+  border-radius: var(--radius);
+  border-inline-start: 4px solid var(--co);
+  background: color-mix(in oklab, var(--co) 12%, transparent);
+}
+.callout > .callout-title {
+  font-family: var(--font-mono);
+  font-size: .55em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--co);
+  margin-bottom: .6em;
+}
+.callout > :last-child { margin-bottom: 0; }
+.callout.tip { --co: var(--accent); }
+.callout.note { --co: var(--info); }
+.callout.warning { --co: var(--warn); }
+.callout.danger { --co: var(--fail); }
+
+/* panels / card grids */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: .8em 1em;
+}
+.panel > h3, .panel > h4 { margin-top: 0; }
+.cardgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11em, 1fr));
+  gap: .8em;
+  margin-block: .8em;
+}
+
+/* option comparison — recommended flagged */
+.optgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+  gap: .8em;
+  margin-block: .8em;
+}
+.opt {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: .8em 1em;
+}
+.opt > h4 { margin-top: 0; display: flex; align-items: center; gap: .6em; justify-content: space-between; }
+.opt.reco {
+  border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+  background: color-mix(in oklab, var(--accent) 7%, var(--surface));
+}
+.opt .verdict {
+  font-family: var(--font-mono);
+  font-size: .58em;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 1em;
+  margin-top: 1em;
+}
+.opt.reco .verdict { color: var(--accent); }
+
+/* timeline steps */
+.steps { list-style: none; padding: 0; margin-block: .8em; }
+.steps li {
+  position: relative;
+  padding-inline-start: 1.8em;
+  padding-bottom: .9em;
+  margin: 0;
+}
+.steps li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .4em;
+  width: .55em; height: .55em;
+  background: var(--accent);
+  box-shadow: 0 0 0 .18em color-mix(in oklab, var(--accent) 25%, transparent);
+}
+.steps li::after {
+  content: "";
+  position: absolute;
+  left: .22em; top: 1.25em;
+  bottom: .1em;
+  width: 2px;
+  background: var(--border);
+}
+.steps li:last-child::after { display: none; }
+.steps li > b:first-child { display: block; color: var(--text-strong); }
+
+/* checklist */
+.check { list-style: none; padding: 0; margin-block: .8em; }
+.check li { position: relative; padding-inline-start: 1.8em; }
+.check li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .22em;
+  width: .8em; height: .8em;
+  border: 2px solid var(--accent);
+  border-radius: 2px;
+}
+.check li.done::before { background: var(--accent); }
+.check li.done::after {
+  content: "";
+  position: absolute;
+  left: .26em; top: .28em;
+  width: .26em; height: .5em;
+  border: solid var(--bg);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: .8em;
+  font-size: .68em;
+}
+th {
+  font-family: var(--font-mono);
+  font-size: .82em;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  text-align: left;
+  padding: .55em .7em;
+  border-bottom: 2px solid var(--border);
+}
+td { padding: .55em .7em; border-bottom: 1px solid var(--border); vertical-align: top; }
+
+/* ledger: ruled definition rows */
+.ledger { margin-block: .8em; }
+.ledger .row {
+  display: grid;
+  grid-template-columns: minmax(7em, 11em) 1fr;
+  gap: .9em;
+  padding-block: .45em;
+  border-bottom: 1px solid var(--border);
+  font-size: .74em;
+}
+.ledger .row > b:first-child { font-family: var(--font-mono); font-weight: 500; color: var(--accent); }
+
+/* code */
+code {
+  font-family: var(--font-mono);
+  font-size: .92em;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: .08em .3em;
+  color: #a7f3d0;
+}
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border: 1.5px solid var(--code-border);
+  border-radius: var(--radius);
+  padding: .9em 1.1em;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: .62em;
+  line-height: 1.6;
+  margin-block: .8em;
+}
+pre code { background: none; border: none; padding: 0; color: inherit; font-size: inherit; }
+.tok-c { color: var(--code-comment); font-style: italic; }
+.tok-k { color: var(--code-keyword); }
+.tok-s { color: var(--code-string); }
+.tok-f { color: var(--code-fn); }
+.tok-n { color: var(--code-num); }
+
+.codeblock { margin-block: .8em; }
+.codeblock .code-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: .55em;
+  color: var(--muted);
+  background: var(--code-bg);
+  border: 1.5px solid var(--code-border);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: .5em 1.2em;
+}
+.codeblock pre { margin-block: 0; border-top-left-radius: 0; }
+
+/* terminal */
+pre.term, .term {
+  background: var(--code-bg);
+  border: 1.5px solid var(--code-border);
+  border-radius: var(--radius);
+  padding: .9em 1.1em;
+  font-family: var(--font-mono);
+  font-size: .62em;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin-block: .8em;
+  color: var(--code-fg);
+}
+.term .ps1 { color: var(--accent); user-select: none; }
+.term .out { color: var(--muted); }
+.term .cmt { color: var(--code-comment); font-style: italic; }
+
+/* diagrams: HTML boxes + unicode arrows, never absolute-positioned text */
+.diagram { margin-block: .8em; font-family: var(--font-mono); font-size: .58em; }
+.diagram .drow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .7em;
+  margin-block: .7em;
+}
+.diagram .box {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: .6em 1em;
+  text-align: center;
+}
+.diagram .box small { display: block; color: var(--muted); font-size: .85em; }
+.diagram .box.hot { border-color: color-mix(in oklab, var(--accent) 55%, transparent); color: var(--accent-hover); }
+.diagram .arrow { color: var(--muted); font-size: 1.2em; }
+.diagram .dcaption { text-align: center; color: var(--muted); margin-top: .8em; }
+
+/* decision record (ADR) */
+.decision {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: .8em 1em;
+  margin-block: .8em;
+}
+.decision .decision-head {
+  display: flex;
+  align-items: center;
+  gap: .8em;
+  flex-wrap: wrap;
+  margin-bottom: .4em;
+}
+.decision .decision-head b { font-family: var(--font-display); font-size: .85em; color: var(--text-strong); }
+.decision .drivers { color: var(--muted); font-size: .74em; }
+
+blockquote {
+  margin: .8em 0;
+  padding: .2em 0 .2em 1em;
+  border-inline-start: 4px solid var(--border);
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   Chrome: strap (scrubbable progress), counter, hint, overview
+   ============================================================ */
+#strap {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.25rem;
+  border-top: 1px solid var(--border);
+  background: color-mix(in oklab, var(--bg) 88%, black);
+  z-index: 5;
+}
+#strap .brand {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+/* segmented strap: one segment per slide — click a segment to jump */
+#strapbar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 100%;
+  cursor: pointer;
+  touch-action: none;
+}
+#strapbar .seg {
+  flex: 1;
+  min-width: 3px;
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: 1px;
+  transition: height .1s ease-out, background-color .1s ease-out;
+}
+#strapbar .seg.on { background: var(--accent-dim); }
+#strapbar .seg.cur { background: var(--accent-hover); height: 14px; }
+#strapbar .seg:hover { height: 14px; background: color-mix(in oklab, var(--accent) 45%, var(--surface-2)); }
+#strapbar .seg.appendix-seg:not(.on):not(.cur) { background: color-mix(in oklab, var(--surface-2) 60%, var(--bg)); }
+#counter {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  color: var(--muted);
+  white-space: nowrap;
+  min-width: 4.5em;
+  text-align: right;
+}
+.navbtn {
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: .15rem .6rem;
+  cursor: pointer;
+}
+.navbtn:hover { color: var(--accent-hover); border-color: var(--accent-dim); }
+
+#hint {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 3.4rem;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  color: var(--muted);
+  opacity: .8;
+  transition: opacity 1s;
+  z-index: 5;
+}
+#hint.faded { opacity: 0; pointer-events: none; }
+
+/* overview grid (press O) */
+#overview {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: color-mix(in oklab, var(--bg) 94%, black);
+  padding: 3rem clamp(1.5rem, 6vw, 5rem);
+  overflow-y: auto;
+}
+#overview[hidden] { display: none; }
+#overview .ov-label {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+#overview .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: .8rem;
+}
+#overview .chip {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  text-align: left;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: .7rem .9rem;
+  cursor: pointer;
+}
+#overview .chip:hover { border-color: var(--accent-dim); color: var(--accent-hover); }
+#overview .chip.current { border-color: var(--accent); }
+#overview .chip .n { color: var(--accent); margin-right: .6em; }
+#overview .chip.is-divider { background: color-mix(in oklab, var(--accent) 8%, var(--surface)); }
+
+/* ============================================================
+   Print: light theme, one slide per page, no chrome
+   ============================================================ */
+@media print {
+  :root {
+    --bg: #ffffff;
+    --surface: #f1f5f9;
+    --surface-2: #e2e8f0;
+    --border: #cbd5e1;
+    --text: #1e293b;
+    --text-strong: #0f172b;
+    --muted: #475569;
+    --accent: #007a55;
+    --accent-hover: #006045;
+    --accent-dim: #007a55;
+    --pass: #007a55;
+    --warn: #a8720d;
+    --fail: #c13a3a;
+    --info: #1c4fd8;
+  }
+  html, body { overflow: visible; height: auto; }
+  body { font-size: 13pt; }
+  .slide {
+    display: flex !important;
+    position: relative;
+    inset: auto;
+    min-height: 100vh;
+    page-break-after: always;
+    overflow: visible;
+  }
+  #strap, #hint, #overview { display: none !important; }
+  a { background: none; color: var(--accent); text-decoration: underline; }
+  pre, .term, pre.term { border: 1px solid #cbd5e1; background: #f8fafc; color: #1e293b; }
+  .term .ps1 { color: #007a55; }
+  .term .out, .tok-c, .term .cmt { color: #475569; }
+  .tok-k { color: #7c3aed; } .tok-s { color: #92400e; } .tok-f { color: #1d4ed8; } .tok-n { color: #b45309; }
+  code { color: #005c46; }
+  .slide.divider { background: #f8fafc; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= SLIDE 1 · TITLE ================= -->
+<section class="slide title active" data-title="Title">
+  <div class="eyebrow">SPEC<span class="sep">/</span>PROJECT NAME<span class="sep">/</span>2026</div>
+  <h1>Document Title</h1>
+  <p class="lede">One-sentence summary of what this deck covers and why it exists.</p>
+  <div class="doc-meta">
+    <span><b>Status</b> <span class="tag warn">Draft</span></span>
+    <span><b>Author</b> Karey Higuera</span>
+    <span><b>Date</b> 2026-08-04</span>
+  </div>
+</section>
+
+<!-- ================= CONTENT SLIDES ================= -->
+<!-- One idea per slide. data-title feeds the overview grid (press O).
+     Use .slide.divider between major parts, .slide.appendix after the end.
+     See the skill's references/components.md for all component markup. -->
+
+<!-- ================= CHROME ================= -->
+<div id="strap">
+  <span class="brand">SPEC / PROJECT</span>
+  <button class="navbtn" id="prev" aria-label="Previous slide">←</button>
+  <div id="strapbar" aria-hidden="true"></div>
+  <button class="navbtn" id="next" aria-label="Next slide">→</button>
+  <span id="counter">01 / 01</span>
+</div>
+<div id="hint">← → navigate · O overview · F fullscreen · P print</div>
+<div id="overview" hidden>
+  <div class="ov-label">Overview — click to jump · Esc to close</div>
+  <div class="grid"></div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var mainCount = slides.filter(function (s) { return !s.classList.contains("appendix"); }).length;
+  var cur = 0;
+  var counter = document.getElementById("counter");
+  var bar = document.getElementById("strapbar");
+  var overview = document.getElementById("overview");
+  var ovGrid = overview.querySelector(".grid");
+  var hint = document.getElementById("hint");
+
+  function label(i) {
+    var s = slides[i];
+    if (s.classList.contains("appendix")) {
+      var aIdx = i - mainCount + 1;
+      return "A" + aIdx;
+    }
+    return String(i + 1).padStart(2, "0");
+  }
+
+  function show(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides[cur].classList.remove("active");
+    cur = i;
+    slides[cur].classList.add("active");
+    slides[cur].scrollTop = 0;
+    counter.textContent = label(cur) + " / " + (slides[cur].classList.contains("appendix")
+      ? "A" + (slides.length - mainCount) : String(mainCount).padStart(2, "0"));
+    history.replaceState(null, "", "#" + (cur + 1));
+    var chips = ovGrid.children;
+    for (var c = 0; c < chips.length; c++) chips[c].classList.toggle("current", c === cur);
+    var segs = bar.children;
+    for (var g = 0; g < segs.length; g++) {
+      segs[g].classList.toggle("on", g < cur);
+      segs[g].classList.toggle("cur", g === cur);
+    }
+  }
+
+  // strap segments: one per slide, click to jump, hover tooltip shows the title
+  slides.forEach(function (s, i) {
+    var seg = document.createElement("div");
+    seg.className = "seg" + (s.classList.contains("appendix") ? " appendix-seg" : "");
+    seg.title = label(i) + " · " + (s.getAttribute("data-title") || "Slide " + (i + 1));
+    bar.appendChild(seg);
+  });
+
+  // overview chips from data-title
+  slides.forEach(function (s, i) {
+    var chip = document.createElement("button");
+    chip.className = "chip" + (s.classList.contains("divider") ? " is-divider" : "");
+    chip.innerHTML = "<span class='n'>" + label(i) + "</span>" +
+      (s.getAttribute("data-title") || "Slide " + (i + 1));
+    chip.addEventListener("click", function () {
+      overview.hidden = true;
+      show(i);
+    });
+    ovGrid.appendChild(chip);
+  });
+
+  // keyboard
+  addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (!overview.hidden && (k === "Escape" || k === "o" || k === "O")) { overview.hidden = true; return; }
+    if (k === "ArrowRight" || k === " " || k === "PageDown") { e.preventDefault(); show(cur + 1); }
+    else if (k === "ArrowLeft" || k === "PageUp") { e.preventDefault(); show(cur - 1); }
+    else if (k === "Home") { e.preventDefault(); show(0); }
+    else if (k === "End") { e.preventDefault(); show(slides.length - 1); }
+    else if (k === "o" || k === "O") { overview.hidden = false; }
+    else if (k === "f" || k === "F") {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  overview.addEventListener("click", function (e) { if (e.target === overview) overview.hidden = true; });
+
+  // buttons; click-on-slide advance intentionally NOT wired (text selection matters)
+  document.getElementById("prev").addEventListener("click", function () { show(cur - 1); });
+  document.getElementById("next").addEventListener("click", function () { show(cur + 1); });
+
+  // scrubbable strap (drag across segments)
+  function scrub(e) {
+    var r = bar.getBoundingClientRect();
+    var frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    show(Math.round(frac * (slides.length - 1)));
+  }
+  bar.addEventListener("pointerdown", function (e) {
+    bar.classList.add("dragging");
+    bar.setPointerCapture(e.pointerId);
+    scrub(e);
+  });
+  bar.addEventListener("pointermove", function (e) { if (bar.classList.contains("dragging")) scrub(e); });
+  bar.addEventListener("pointerup", function () { bar.classList.remove("dragging"); });
+
+  // touch swipe on slides
+  var tx = null;
+  addEventListener("touchstart", function (e) { tx = e.changedTouches[0].clientX; }, { passive: true });
+  addEventListener("touchend", function (e) {
+    if (tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 60) show(cur + (dx < 0 ? 1 : -1));
+    tx = null;
+  }, { passive: true });
+
+  // hash deep-links
+  function fromHash() {
+    var n = parseInt(location.hash.slice(1), 10);
+    if (!isNaN(n) && n >= 1 && n <= slides.length) show(n - 1);
+  }
+  addEventListener("hashchange", fromHash);
+
+  // fade the hint after a few seconds
+  setTimeout(function () { hint.classList.add("faded"); }, 6000);
+
+  fromHash();
+  show(cur);
+})();
+</script>
+</body>
+</html>

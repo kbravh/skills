@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "html-specs",
+  "displayName": "HTML Spec Decks",
+  "version": "0.1.0",
+  "description": "Create engaging, self-contained HTML slide decks for specs, implementation plans, ADRs, and brainstorm docs — keyboard-navigable single-file decks with a dark slate + emerald design system and ready-made components.",
+  "keywords": [
+    "specs",
+    "slides",
+    "adr",
+    "documentation",
+    "design-docs",
+    "html"
+  ],
+  "author": {
+    "name": "Karey Higuera",
+    "email": "karey.higuera@gmail.com",
+    "url": "https://github.com/kbravh"
+  },
+  "license": "MIT"
+}
