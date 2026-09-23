@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "prisma-expand-contract",
+  "displayName": "Prisma Expand-Contract",
+  "version": "0.1.0",
+  "description": "Safe database schema migrations using the expand-and-contract pattern with Prisma ORM. Rename columns and tables, change types, and add non-nullable columns with zero downtime.",
+  "keywords": [
+    "prisma",
+    "migrations",
+    "database",
+    "zero-downtime",
+    "schema"
+  ],
+  "author": {
+    "name": "Karey Higuera",
+    "email": "karey.higuera@gmail.com",
+    "url": "https://github.com/kbravh"
+  },
+  "license": "MIT"
+}

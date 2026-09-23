@@ -48,6 +48,48 @@
         "url": "https://github.com/kbravh"
       },
       "license": "MIT"
+    },
+    {
+      "name": "logo-design",
+      "source": "./logo-design",
+      "description": "Brand discovery and SVG logo creation: develop logo concepts from brand research and competitor analysis, then turn the approved concept brief into production SVG logos and variations.",
+      "version": "0.1.0",
+      "category": "design",
+      "tags": ["logo", "branding", "svg", "design", "ideation"],
+      "author": {
+        "name": "Karey Higuera",
+        "email": "karey.higuera@gmail.com",
+        "url": "https://github.com/kbravh"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "prisma-expand-contract",
+      "source": "./prisma-expand-contract",
+      "description": "Safe database schema migrations using the expand-and-contract pattern with Prisma ORM. Rename columns and tables, change types, and add non-nullable columns with zero downtime.",
+      "version": "0.1.0",
+      "category": "database",
+      "tags": ["prisma", "migrations", "database", "zero-downtime", "schema"],
+      "author": {
+        "name": "Karey Higuera",
+        "email": "karey.higuera@gmail.com",
+        "url": "https://github.com/kbravh"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "tanstack-query",
+      "source": "./tanstack-query",
+      "description": "TanStack Query (React Query) v5 best practices for data fetching, caching, and mutations: query keys, invalidation, optimistic updates, SSR, and testing.",
+      "version": "0.1.0",
+      "category": "data-fetching",
+      "tags": ["tanstack-query", "react-query", "react", "typescript", "data-fetching"],
+      "author": {
+        "name": "Karey Higuera",
+        "email": "karey.higuera@gmail.com",
+        "url": "https://github.com/kbravh"
+      },
+      "license": "MIT"
     }
   ]
 }

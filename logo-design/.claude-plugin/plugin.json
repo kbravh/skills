@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "logo-design",
+  "displayName": "Logo Design",
+  "version": "0.1.0",
+  "description": "Brand discovery and SVG logo creation: develop logo concepts from brand research and competitor analysis, then turn the approved concept brief into production SVG logos and variations.",
+  "keywords": [
+    "logo",
+    "branding",
+    "svg",
+    "design",
+    "ideation"
+  ],
+  "author": {
+    "name": "Karey Higuera",
+    "email": "karey.higuera@gmail.com",
+    "url": "https://github.com/kbravh"
+  },
+  "license": "MIT"
+}
