@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "tanstack-query",
+  "displayName": "TanStack Query",
+  "version": "0.1.0",
+  "description": "TanStack Query (React Query) v5 best practices for data fetching, caching, and mutations: query keys, invalidation, optimistic updates, SSR, and testing.",
+  "keywords": [
+    "tanstack-query",
+    "react-query",
+    "react",
+    "typescript",
+    "data-fetching"
+  ],
+  "author": {
+    "name": "Karey Higuera",
+    "email": "karey.higuera@gmail.com",
+    "url": "https://github.com/kbravh"
+  },
+  "license": "MIT"
+}
