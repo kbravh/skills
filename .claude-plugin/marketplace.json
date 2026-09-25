@@ -25,7 +25,7 @@
       "name": "html-specs",
       "source": "./html-specs",
       "description": "Create engaging, self-contained HTML slide decks for specs, implementation plans, ADRs, and brainstorm docs — keyboard-navigable single-file decks with a dark slate + emerald design system and ready-made components.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "documentation",
       "tags": ["specs", "slides", "adr", "documentation", "design-docs", "html"],
       "author": {

@@ -422,10 +422,19 @@ pre.term, .term {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: .7em;
   margin-block: .7em;
 }
+/* sequences stack top to bottom: a flow split across two rows loses its order */
+.diagram .flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35em;
+  margin-block: .7em;
+}
+.diagram .flow .box { min-width: 14em; }
 .diagram .box {
   border: 1px solid var(--border);
   background: var(--surface);

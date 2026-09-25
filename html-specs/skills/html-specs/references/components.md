@@ -260,21 +260,47 @@ copy-paste grabs only the command), `out` = output, `cmt` = comment.
 
 ## Diagrams
 
-HTML boxes + unicode arrows (→ ↓ ⇄), never absolute-positioned text — that's
+HTML boxes + unicode arrows (↓ → ⇄), never absolute-positioned text — that's
 why they survive every viewport. `hot` highlights the box under discussion.
+
+**Sequences run top to bottom.** Workflows, pipelines, promotion lanes, request
+paths — anything with an order — go in a `.flow` column with `↓` between
+steps. A horizontal flow that wraps onto a second row loses its order at a
+glance, and at slide widths it will wrap.
 
 ```html
 <div class="diagram">
-  <div class="drow">
+  <div class="flow">
     <div class="box">Webhook<small>receiver</small></div>
-    <span class="arrow">→</span>
+    <span class="arrow">↓</span>
     <div class="box hot">Queue<small>per-user buffer</small></div>
-    <span class="arrow">→</span>
+    <span class="arrow">↓</span>
     <div class="box">Renderer<small>MJML → HTML</small></div>
+    <span class="arrow">↓</span>
+    <div class="box">Postmark</div>
   </div>
-  <div class="drow"><span class="arrow">↓</span></div>
-  <div class="drow"><div class="box">Postmark</div></div>
   <div class="dcaption">Digest pipeline — buffer flush every 5 min</div>
+</div>
+```
+
+`.drow` is for peers side by side (two or three boxes, no order between
+them) and never wraps. More than three, or any sequence: use `.flow`.
+
+**Show the real identifier.** When a box names something with a real name —
+a git branch, an environment, a service, a queue, a table — put the real
+name beside any friendly label: `Stable (<code>main</code>)`, not `Stable`.
+The reader has to map the diagram onto the thing they type.
+
+```html
+<div class="diagram">
+  <div class="flow">
+    <div class="box">Development (<code>dev</code>)<small>every merged PR</small></div>
+    <span class="arrow">↓</span>
+    <div class="box">Preview (<code>preview</code>)<small>release candidate</small></div>
+    <span class="arrow">↓</span>
+    <div class="box hot">Stable (<code>main</code>)<small>what users run</small></div>
+  </div>
+  <div class="dcaption">Promotion lanes</div>
 </div>
 ```
 

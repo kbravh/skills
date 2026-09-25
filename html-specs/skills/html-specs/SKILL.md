@@ -76,7 +76,10 @@ easier to grok than a long page — each slide is a bounded thought.
   usually a spec that hasn't decided anything yet.
 - **Diagrams**: HTML boxes + unicode arrows by default (they reflow at every
   width). Hand-written inline SVG only for genuinely 2D topologies. Never
-  mermaid or any external renderer.
+  mermaid or any external renderer. Workflows, pipelines, and lanes stack
+  vertically (`.flow`) — a flow that wraps onto two rows loses its order.
+  Anything with a real identifier (branch, env, service) shows it beside the
+  friendly label: `Stable (main)`, not `Stable`.
 - **Syntax highlighting**: hand-wrapped `tok-*` spans, only for short,
   load-bearing snippets. Long code stays unhighlighted.
 - **Status colors** are semantic, not decorative: green
