@@ -191,7 +191,10 @@ the step title.
 
 ## Checklist (acceptance criteria)
 
-`done` fills the box with a checkmark.
+Only for items someone will tick off: acceptance criteria, a task list, a
+readiness gate. A list of facts, promises, or outcomes is a plain `<ul>` —
+empty boxes beside a statement read as unfinished work. `done` fills the box
+with a checkmark.
 
 ```html
 <ul class="check">

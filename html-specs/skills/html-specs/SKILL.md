@@ -31,7 +31,9 @@ easier to grok than a long page — each slide is a bounded thought.
 5. **Vary the shape.** Consecutive slides shouldn't repeat the same layout.
    Split → diagram → option grid → checklist. Bullet lists are the component
    of last resort — most are secretly a timeline (`.steps`), checklist
-   (`.check`), ledger (`.ledger`), or card grid.
+   (`.check`), ledger (`.ledger`), or card grid. A checklist is only for items
+   someone will tick off (acceptance criteria, a task list); statements,
+   policies, and outcomes stay a plain list.
 
 ## Workflow
 
