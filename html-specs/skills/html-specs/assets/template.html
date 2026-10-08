@@ -749,7 +749,7 @@ blockquote {
   function scrub(e) {
     var r = bar.getBoundingClientRect();
     var frac = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
-    show(Math.round(frac * (slides.length - 1)));
+    show(Math.min(slides.length - 1, Math.floor(frac * slides.length)));
   }
   bar.addEventListener("pointerdown", function (e) {
     bar.classList.add("dragging");
