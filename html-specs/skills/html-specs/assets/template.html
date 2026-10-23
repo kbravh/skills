@@ -716,8 +716,11 @@ blockquote {
   slides.forEach(function (s, i) {
     var chip = document.createElement("button");
     chip.className = "chip" + (s.classList.contains("divider") ? " is-divider" : "");
-    chip.innerHTML = "<span class='n'>" + label(i) + "</span>" +
-      (s.getAttribute("data-title") || "Slide " + (i + 1));
+    var num = document.createElement("span");
+    num.className = "n";
+    num.textContent = label(i);
+    chip.appendChild(num);
+    chip.appendChild(document.createTextNode(s.getAttribute("data-title") || "Slide " + (i + 1)));
     chip.addEventListener("click", function () {
       overview.hidden = true;
       show(i);
